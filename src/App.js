@@ -1,24 +1,46 @@
-import logo from './logo.svg';
 import './App.css';
+import React from 'react';
+import { Footer } from './Components/Footer';
+import { Header } from './Components/Header';
+import { Main } from './Components/Main';
+import { ToDoForm } from './Components/ToDoForm';
+import { ToDoItem } from './Components/ToDoItem';
+import { ToDoList } from './Components/ToDoList';
 
 function App() {
+
+  let toDos = [
+    {
+      tarea: "Inscribir Materias",
+      status: true,
+    },
+    {
+      tarea: "Hacerme de desayunar",
+      status: false,
+    },
+    {
+      tarea: "Ir al gym",
+      status: false,
+    },
+    {
+      tarea: "Dar repaso de la clase",
+      status: false,
+    },
+  ]
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Header />
+      <Main>
+        <ToDoForm />
+        <ToDoList>
+          {toDos.map((toDo, key) => {
+            return (<ToDoItem tarea={toDo.tarea} status={toDo.status} key={key}/>)
+          })}
+        </ToDoList>
+      </Main>
+      <Footer nombre={"Diego Andre Lechuga Pimentel"}/>
+    </>
   );
 }
 
