@@ -1,15 +1,16 @@
 import './App.css';
-import React from 'react';
+import React, { useState } from 'react';
 import { Footer } from './Components/Footer';
 import { Header } from './Components/Header';
 import { Main } from './Components/Main';
 import { ToDoForm } from './Components/ToDoForm';
 import { ToDoItem } from './Components/ToDoItem';
 import { ToDoList } from './Components/ToDoList';
+import { ToDoCounter } from './Components/ToDoCounter';
 
 function App() {
 
-  let toDos = [
+  let initialToDos = [
     {
       tarea: "Inscribir Materias",
       status: true,
@@ -20,22 +21,35 @@ function App() {
     },
     {
       tarea: "Ir al gym",
-      status: false,
+      status: true,
     },
     {
       tarea: "Dar repaso de la clase",
+      status: true,
+    },
+    {
+      tarea: "Utilizar estados",
       status: false,
     },
   ]
 
+  const [todos, setTodos] = useState(initialToDos);
+
+  const [addTodo, setAddTodo] = useState("");
+  
+  const completedToDos = todos.filter((todo) => !!todo.status).length
+
+  const todosLength = todos.length;
+
   return (
     <>
       <Header />
+      <ToDoCounter todosLength={todosLength} completedToDos={completedToDos}/>
       <Main>
-        <ToDoForm />
+        <ToDoForm addTodo={addTodo} setAddTodo={setAddTodo} todos={todos} setTodos={setTodos}/>
         <ToDoList>
-          {toDos.map((toDo, key) => {
-            return (<ToDoItem tarea={toDo.tarea} status={toDo.status} key={key}/>)
+          {todos.map((toDo, key) => {
+            return (<ToDoItem tarea={toDo.tarea} status={toDo.status} index={key} todos={todos} setTodos={setTodos} key={key}/>)
           })}
         </ToDoList>
       </Main>
